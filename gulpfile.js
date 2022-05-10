@@ -2,7 +2,6 @@ const { src, dest, series, watch } = require(`gulp`),
 htmlValidator = require('gulp-html'),
 htmlCompressor = require('gulp-htmlmin'),
 cssCleaner = require ('gulp-clean-css');
-const { compileFunction } = require('vm');
 
 let htmlValidate = () => {
     return src('*.html').pipe(htmlValidator())
