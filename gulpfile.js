@@ -14,13 +14,13 @@ let htmlValidate = () => {
 let htmlCompress = () => {
     return src('*.html')
     .pipe(htmlCompressor())
-    .pipe(dest('prod'));
+    .pipe(gulp.dest('prod'));
 }
 
 let cssClean = () => {
     return src('css/*.css')
     .pipe(cleanCSS({compatibility: 'ie8'}))
-    .pipe(dest('prod/css'));
+    .pipe(gulp.dest('prod/css'));
 }
 
 let transpileDev = () => {
@@ -28,4 +28,9 @@ let transpileDev = () => {
     .pipe(babel())
     .pipe(jsCompressor())
     .pipe(gulp.dest('transpiles'));
+}
+
+let transpileProd = () => {
+    return src('img/*')
+    .pipe(gulp.dest('prod/img'));
 }
