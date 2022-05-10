@@ -1,21 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Image Carousel Final Project</title>
+  <meta charset="utf-8">
+  <title>Image Carousel Final</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <div class="carousel-container">
-    <div class="carousel-slide">
-      <img src="./img/black.png" alt="black">
-      <img src="./img/blue.png" alt="blue">
-      <img src="./img/green.png" alt="green">
-      <img src="./img/original-image.png" alt="original">
-      <img src="./img/red.png" alt="red">
+  <header>
+    <h1>Image Carousel</h1>
+  </header>
+  <main>
+    <div class="carousel">
+      <button class="carousel__button previous" id="previous"></button>
+      <div class="carousel-">
+        <img class="active" src="img/red.png" alt="red">
+        <img src="img/black.png" alt="black">
+        <img src="img/blue.png" alt="blue">
+        <img src="img/green.png" alt="green">
+        <img src="img/original-image.png" alt="original">
+      </div>
+      <button class="carousel__button next" id="next">></button>
     </div>
-  </div>
-  <script src="app.js"></script>
+
+  </main>
+  <script src="js/app.js"></script>
 </body>
 </html>
