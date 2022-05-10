@@ -3,7 +3,8 @@ htmlValidator = require('gulp-html'),
 htmlCompressor = require('gulp-htmlmin'),
 cssCleaner = require ('gulp-clean-css'),
 jsCompressor = require('gulp-uglify'),
-babel = require('gulp-babel');
+babel = require('gulp-babel'),
+gulpStyleLint = require('gulp-stylelint');
 
 
 let htmlValidate = () => {
@@ -33,4 +34,11 @@ let transpileDev = () => {
 let transpileProd = () => {
     return src('img/*')
     .pipe(gulp.dest('prod/img'));
+}
+
+let cssLinter = () => {
+    return src('css/style.css')
+    .pipe(gulpStylelint({
+        reporters: [{formatter: 'string', console: true}]}))
+    .pipe(gulp.dest('lcss'));
 }
