@@ -11,45 +11,50 @@ refresh = browserSync.reload;
 
 let htmlValidate = () => {
     return src('*.html').pipe(htmlValidator())
-    .pipe(gulp.dest('valid'));
+    .pipe(dest('new/validate'));
 }
 
 let htmlCompress = () => {
     return src('*.html')
     .pipe(htmlCompressor())
-    .pipe(gulp.dest('prod'));
+    .pipe(dest('prod'));
 }
 
 let cssClean = () => {
     return src('css/*.css')
-    .pipe(cleanCSS({compatibility: 'ie8'}))
-    .pipe(gulp.dest('prod/css'));
+    .pipe(cssCleaner({compatibility: 'ie8'}))
+    .pipe(dest('prod/css'));
 }
 
 let transpileDev = () => {
     return src('js/*.js')
     .pipe(babel())
     .pipe(jsCompressor())
-    .pipe(gulp.dest('new/js'));
+    .pipe(dest('new/js'));
 }
 
 let transpileProd = () => {
     return src('js/*.js')
     .pipe(babel())
     .pipe(jsCompressor())
-    .pipe(gulp.dest('prod/js'));
+    .pipe(dest('prod/js'));
 }
 
 let transpileImgProd = () => {
     return src('img/*.jpg')
-    .pipe(gulp.dest('prod/img'));
+    .pipe(dest('prod/img'));
 }
 
 let cssLinter = () => {
     return src('css/style.css')
     .pipe(gulpStylelint({reporters:
         [{formatter: 'string', console: true}]}))
-    .pipe(gulp.dest('lcss'));
+    .pipe(dest('lcss'));
+}
+
+let jsLinter = () => {
+    return src('js/*.js')
+    .pipe(gulpESLint())
 }
 
 let serve = () => {
@@ -64,7 +69,17 @@ let serve = () => {
     gulp.watch('css/*.css', cssLinter)
         gulp.on('change', refresh);
 
-    gulp.watch('*.html', validateHTML)
+    gulp.watch('*.html', htmlValidate)
         gulp.on('change', refresh);
 };
 
+exports.htmlValidate = htmlValidate;
+exports.htmlCompress = htmlCompress;
+exports.cssLinter = cssLinter;
+exports.cssClean = cssClean;
+exports.gulpESLint = gulpESLint;
+exports.transpileDev = transpileDev;
+exports.transpileImgProd = transpileImgProd;
+exports.transpileProd = transpileProd;
+exports.serve = series(htmlValidate, cssLinter, jsLinter, transpileDev, serve);
+exports.build = series(htmlCompress, cssClean, transpileProd, transpileImgProd);
