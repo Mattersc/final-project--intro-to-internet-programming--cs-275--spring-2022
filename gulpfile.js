@@ -1,7 +1,10 @@
 const { src, dest, series, watch } = require(`gulp`),
 htmlValidator = require('gulp-html'),
 htmlCompressor = require('gulp-htmlmin'),
-cssCleaner = require ('gulp-clean-css');
+cssCleaner = require ('gulp-clean-css'),
+jsCompressor = require('gulp-uglify'),
+babel = require('gulp-babel');
+
 
 let htmlValidate = () => {
     return src('*.html').pipe(htmlValidator())
@@ -18,4 +21,11 @@ let cssClean = () => {
     return src('css/*.css')
     .pipe(cleanCSS({compatibility: 'ie8'}))
     .pipe(dest('prod/css'));
+}
+
+let transpileDev = () => {
+    return src('js/*.js')
+    .pipe(babel())
+    .pipe(jsCompressor())
+    .pipe(gulp.dest('transpiles'));
 }
